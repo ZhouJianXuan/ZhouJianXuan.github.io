@@ -4,13 +4,25 @@
   
     
     <entry>
-      <title>Hello World</title>
-      <link href="/2022/11/02/hello-world/"/>
-      <url>/2022/11/02/hello-world/</url>
+      <title>MySQL的隔离级别及锁机制</title>
+      <link href="/2022/11/05/mysql-de-ge-chi-ji-bie-ji-suo-ji-zhi/"/>
+      <url>/2022/11/05/mysql-de-ge-chi-ji-bie-ji-suo-ji-zhi/</url>
       
-        <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
+        <content type="html"><![CDATA[<p>不同的隔离级别可能会使用不同的锁，所以日常工作中可以通过调整隔离级别解决某种bug。<br />一图了解不同的隔离级别使用不同的锁。<br /><img src="https://s3.bmp.ovh/imgs/2022/11/05/8d555234ba3165d2.png" alt="image.png"><br><a name="T3Nsx"></a></p><h3 id="MySQL的锁机制"><a href="#MySQL的锁机制" class="headerlink" title="MySQL的锁机制"></a>MySQL的锁机制</h3><blockquote><p>对于 MySQL 来说，如果只支持串行访问的话，那么其效率会非常低。因此，为了提高数据库的运行效率，MySQL 需要支持并发访问。而在并发访问的情况下，会发生各种各样的问题，例如：脏读、不可重复读、幻读等问题。为了解决这些问题，就出现了事务隔离级别。</p></blockquote><p>事务隔离级别的出现是为了解决MySQL并发访问的问题，全局锁、表锁、行级锁是事物隔离级别的具体实现。MVCC、意向锁这些是局部的性能优化。<br><a name="XxIOI"></a></p><h3 id="事务隔离级别的表现"><a href="#事务隔离级别的表现" class="headerlink" title="事务隔离级别的表现"></a>事务隔离级别的表现</h3><p>先创建一个表</p><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> game_user</span><br><span class="line">(</span><br><span class="line">    id      <span class="type">int</span> auto_increment</span><br><span class="line">        <span class="keyword">primary</span> key,</span><br><span class="line">    game_id <span class="type">int</span>          <span class="keyword">null</span>,</span><br><span class="line">    name    <span class="type">varchar</span>(<span class="number">255</span>) <span class="keyword">null</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure><p><a name="Asrcy"></a></p><h4 id="读未提交"><a href="#读未提交" class="headerlink" title="读未提交"></a>读未提交</h4><p>设置隔离级别为<code>读未提交</code><br /><code>**SETsessionTRANSACTIONISOLATIONLEVELREAD** UNCOMMITTED; </code><br /><code>**select** @@transaction_isolation; </code><br />然后执行步骤观察数据变化</p><ol><li>创建一个事务A，查询一条数据，事务不提交</li><li>创建另一个事务B，修改前一条事务查询的那条数据的值，事务不提交</li><li>然后事务A重复查询这条数据，可以看到事务B修改微提交的数据</li></ol><p>这就是脏读，在事务隔离级别<code>读未提交</code>中，读写是可以同时执行的。但是写写是不可以的，如果事务A和事务B都同时对同一行数据进行修改操作，会导致阻塞。<br />通过查看锁信息会发现是被一个<code>行级锁</code>锁住了。<br><a name="NFkgQ"></a></p><h4 id="读已提交"><a href="#读已提交" class="headerlink" title="读已提交"></a>读已提交</h4><p><code>读已提交</code>和<code>读未提交</code>一样，都会在事务的写操作加上一个行级锁。区别只是在于<code>读已提交</code>解决了脏读问题。<br><a name="V3dCG"></a></p><h4 id="可重复读"><a href="#可重复读" class="headerlink" title="可重复读"></a>可重复读</h4><p><strong>可重复读存在幻读的问题，但实际上在 MySQL 中，因为其使用了间隙锁，所以在「可重复读」隔离级别下，可以通过加 锁解决幻读问题。因此，MySQL 将「可重复读」作为了其默认的隔离级别。</strong></p>]]></content>
       
       
+      <categories>
+          
+          <category> ✎笔头 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> MySQL </tag>
+            
+        </tags>
       
     </entry>
     
