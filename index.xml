@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Hello周少侠</title>
+    <link>https://zhoujianxuan.github.io/</link>
+    <description>Recent content on Hello周少侠</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Thu, 06 Jul 2023 20:06:03 +0800</lastBuildDate><atom:link href="https://zhoujianxuan.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>plantUML</title>
+      <link>https://zhoujianxuan.github.io/post/plantuml/</link>
+      <pubDate>Thu, 06 Jul 2023 20:06:03 +0800</pubDate>
+      
+      <guid>https://zhoujianxuan.github.io/post/plantuml/</guid>
+      <description>PlantUML PlantUML 简介 PlantUML 是一个用于生成各种图表的工具，它使用一种简单和直观的语言来定义图表，可以在很多其他工具中使用，可以生成 PNG，SVG 或 LaTeX 格式的图片，也可以生成 ASCII 艺术等。 PlantUML 原理 PlantUML 的原理是将用户编写的文本文件转换为图形文件。用户只需要按照 PlantUML 的语法规则来描述图表的元素和关系，然后 PlantUML 会根据这些</description>
+    </item>
+    
+    <item>
+      <title>小林 x 图解计算机基础</title>
+      <link>https://zhoujianxuan.github.io/post/xiaolincoding/</link>
+      <pubDate>Thu, 06 Jul 2023 20:06:03 +0800</pubDate>
+      
+      <guid>https://zhoujianxuan.github.io/post/xiaolincoding/</guid>
+      <description>小林 x 图解计算机基础 👉 点击：图解计算机基础在线阅读 本站所有文章都是我公众号：小林coding的原创文章，内容包含图解计算机网络、操作系统、计算机组成、数据库，共 1000 张图 + 50 万字，破除晦涩难懂的计算机基础知识，让天下没有难懂的八股文（口嗨一下，大家不要当真哈哈）！🚀 曾经我也苦恼于那些</description>
+    </item>
+    
+    <item>
+      <title>关于我</title>
+      <link>https://zhoujianxuan.github.io/about/</link>
+      <pubDate>Tue, 10 Mar 2015 00:13:27 +0000</pubDate>
+      
+      <guid>https://zhoujianxuan.github.io/about/</guid>
+      <description>《Go 实战笔记》系列作者，《Golang Gin 实战》系列作者，《Android Gradle权威指南》作者，现负责技术管理。 Android Gradle权威指南 公众号，扫码关注</description>
+    </item>
+    
+    <item>
+      <title>归档</title>
+      <link>https://zhoujianxuan.github.io/archives/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhoujianxuan.github.io/archives/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>搜索</title>
+      <link>https://zhoujianxuan.github.io/search/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhoujianxuan.github.io/search/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

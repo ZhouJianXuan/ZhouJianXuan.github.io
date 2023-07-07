@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>工具 on Hello周少侠</title>
+    <link>https://zhoujianxuan.github.io/tags/%E5%B7%A5%E5%85%B7/</link>
+    <description>Recent content in 工具 on Hello周少侠</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Thu, 06 Jul 2023 20:06:03 +0800</lastBuildDate><atom:link href="https://zhoujianxuan.github.io/tags/%E5%B7%A5%E5%85%B7/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>plantUML</title>
+      <link>https://zhoujianxuan.github.io/post/plantuml/</link>
+      <pubDate>Thu, 06 Jul 2023 20:06:03 +0800</pubDate>
+      
+      <guid>https://zhoujianxuan.github.io/post/plantuml/</guid>
+      <description>PlantUML PlantUML 简介 PlantUML 是一个用于生成各种图表的工具，它使用一种简单和直观的语言来定义图表，可以在很多其他工具中使用，可以生成 PNG，SVG 或 LaTeX 格式的图片，也可以生成 ASCII 艺术等。 PlantUML 原理 PlantUML 的原理是将用户编写的文本文件转换为图形文件。用户只需要按照 PlantUML 的语法规则来描述图表的元素和关系，然后 PlantUML 会根据这些</description>
+    </item>
+    
+  </channel>
+</rss>
